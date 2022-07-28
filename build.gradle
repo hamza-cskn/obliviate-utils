@@ -1,0 +1,35 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+group 'mc.obliviate'
+version '4.0.2'
+sourceCompatibility = 8
+compileJava.options.encoding = 'UTF-8'
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven-publish'
+
+    group rootProject.group
+    version rootProject.version
+    sourceCompatibility = 8
+    compileJava.options.encoding = 'UTF-8'
+
+    repositories {
+        mavenLocal()
+    }
+
+
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                groupId = project.group
+                version = project.version
+                artifactId = project.name
+                from components.java
+            }
+        }
+    }
+}
