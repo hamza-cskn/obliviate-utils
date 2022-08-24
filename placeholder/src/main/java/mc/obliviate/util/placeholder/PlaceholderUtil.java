@@ -1,11 +1,13 @@
 package mc.obliviate.util.placeholder;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class PlaceholderUtil {
 
-	private final List<InternalPlaceholder> placeholders = new ArrayList<>();
+	private final Set<InternalPlaceholder> placeholders = new HashSet<>();
 
 	/**
 	 *
@@ -21,7 +23,7 @@ public class PlaceholderUtil {
 		return this;
 	}
 
-	public List<InternalPlaceholder> getPlaceholders() {
+	public Set<InternalPlaceholder> getPlaceholders() {
 		return placeholders;
 	}
 
