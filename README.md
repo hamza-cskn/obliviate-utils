@@ -7,6 +7,6 @@ repositories {
 }
     
 dependencies {
-       implementation 'com.github.hamza-cskn:obliviate-utils:2.0.0'
+       implementation 'com.github.hamza-cskn:obliviate-utils:2.0.1'
 }
 ```
