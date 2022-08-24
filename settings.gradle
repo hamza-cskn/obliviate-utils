@@ -1,3 +1,5 @@
 rootProject.name = 'obliviate-utils'
 include 'placeholder'
+include 'string'
+include 'version-detection'
 
