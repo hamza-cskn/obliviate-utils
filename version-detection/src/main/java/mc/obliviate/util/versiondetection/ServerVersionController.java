@@ -84,8 +84,8 @@ public enum ServerVersionController {
      * @return current version of server
      */
     public static ServerVersionController getServerVersion() {
-        if (serverVersion == null) throw new IllegalStateException("Server version could not get because its not calculated. Call ServerVersionController.calculateServerVersion() to calculate.");
-        return serverVersion;
+        if (ServerVersionController.serverVersion == null) throw new IllegalStateException("Server version could not get because its not calculated. Call ServerVersionController.calculateServerVersion() to calculate.");
+        return ServerVersionController.serverVersion;
     }
 
     /**
@@ -93,12 +93,12 @@ public enum ServerVersionController {
      * @param bukkitVersionString Bukkit.getBukkitVersion()
      * @return Bukkit Version Enum
      */
-    public static ServerVersionController calculateServerVersion(String bukkitVersionString) {
+    public static void calculateServerVersion(String bukkitVersionString) {
         final String bukkitVersion = bukkitVersionString.split("-")[0].split("\\.")[1];
         try {
-            return ServerVersionController.valueOf("V1_" + bukkitVersion);
+            ServerVersionController.serverVersion = ServerVersionController.valueOf("V1_" + bukkitVersion);
         } catch (Exception e) {
-            return UNKNOWN;
+            ServerVersionController.serverVersion = UNKNOWN;
         }
     }
 
