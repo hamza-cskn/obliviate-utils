@@ -1,4 +1,5 @@
 # obliviate-utils
+[![](https://jitpack.io/v/hamza-cskn/obliviate-utils.svg)](https://jitpack.io/#hamza-cskn/obliviate-utils)
 
 ```gradle
 repositories {
@@ -6,6 +7,6 @@ repositories {
 }
     
 dependencies {
-       implementation 'com.github.hamza-cskn:obliviate-utils:1.0.0'
+       implementation 'com.github.hamza-cskn:obliviate-utils:2.0.0'
 }
 ```
