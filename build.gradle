@@ -20,7 +20,7 @@ subprojects {
     repositories {
         mavenLocal()
         maven { url 'https://repo.maven.apache.org/maven2/' }
-        maven { url 'https://repo1.maven.org/maven2/net/md-5/bungeecord-api' }
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
         maven { url 'https://repo.codemc.org/repository/nms/' }
     }
 
