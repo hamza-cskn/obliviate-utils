@@ -93,7 +93,7 @@ public enum ServerVersionController {
      * @param bukkitVersionString Bukkit.getBukkitVersion()
      * @return Bukkit Version Enum
      */
-    private static ServerVersionController calculateServerVersion(String bukkitVersionString) {
+    public static ServerVersionController calculateServerVersion(String bukkitVersionString) {
         final String bukkitVersion = bukkitVersionString.split("-")[0].split("\\.")[1];
         try {
             return ServerVersionController.valueOf("V1_" + bukkitVersion);
