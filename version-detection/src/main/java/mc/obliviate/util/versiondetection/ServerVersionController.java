@@ -4,6 +4,9 @@ public enum ServerVersionController {
 
     UNKNOWN,
     OUTDATED,
+    V1_5,
+    V1_6,
+    V1_7,
     V1_8,
     V1_9,
     V1_10,
@@ -21,13 +24,12 @@ public enum ServerVersionController {
     private static ServerVersionController serverVersion;
 
     /**
-     *
      * Examples:
      * param = V1_8, server = V1_9 ---> false
      * param = V1_9, server = V1_9 ---> false
      * param = V1_10, server = V1_9 ---> true
      * param = V1_10, server = V1_11 ---> false
-
+     *
      * @param version version to compare with current version
      * @return true if param version is higher than server's current version.
      */
@@ -36,7 +38,6 @@ public enum ServerVersionController {
     }
 
     /**
-     *
      * Examples:
      * param = V1_8, server = V1_9 ---> false
      * param = V1_9, server = V1_9 ---> true
@@ -49,14 +50,14 @@ public enum ServerVersionController {
     public static boolean isServerVersionAtLeast(ServerVersionController version) {
         return getServerVersion().ordinal() >= version.ordinal();
     }
+
     /**
-     *
      * Examples:
      * param = V1_8, server = V1_9 ---> true
      * param = V1_9, server = V1_9 ---> true
      * param = V1_10, server = V1_9 ---> false
      * param = V1_10, server = V1_11 ---> true
-
+     *
      * @param version version to compare with current version
      * @return true if param version is equal to server's current version or lower.
      */
@@ -65,13 +66,12 @@ public enum ServerVersionController {
     }
 
     /**
-     *
      * Examples:
      * param = V1_8, server = V1_9 ---> true
      * param = V1_9, server = V1_9 ---> false
      * param = V1_10, server = V1_9 ---> false
      * param = V1_10, server = V1_11 ---> true
-
+     *
      * @param version version to compare with current version
      * @return true if param version is lower than server's current version.
      */
@@ -81,30 +81,45 @@ public enum ServerVersionController {
 
     /**
      * Call this method after calling {@code ServerVersionController.calculateServerVersion(Bukkit.getBukkitVersion())}
+     *
      * @return current version of server
      */
     public static ServerVersionController getServerVersion() {
-        if (ServerVersionController.serverVersion == null) throw new IllegalStateException("Server version could not get because its not calculated. Call ServerVersionController.calculateServerVersion() to calculate.");
+        if (ServerVersionController.serverVersion == null) calculateServerVersion(findServerInstance());
         return ServerVersionController.serverVersion;
     }
 
     /**
-     *
-     * @param bukkitVersionString Bukkit.getBukkitVersion()
+     * @param server Bukkit.getServer()
      * @return Bukkit Version Enum
      */
-    public static void calculateServerVersion(String bukkitVersionString) {
-        final String bukkitVersion = bukkitVersionString.split("-")[0].split("\\.")[1];
-        try {
-            ServerVersionController.serverVersion = ServerVersionController.valueOf("V1_" + bukkitVersion);
-        } catch (Exception e) {
+    public static void calculateServerVersion(final Object server) {
+        if (server == null) {
             ServerVersionController.serverVersion = UNKNOWN;
+            return;
+        }
+        final Class<?> serverClazz = server.getClass();
+        final String packageName = serverClazz.getPackage().getName();
+        try {
+            final String version = packageName.substring(packageName.lastIndexOf('.') + 1);
+            ServerVersionController.serverVersion = ServerVersionController.valueOf("V1_" + version.split("_")[1]);
+        } catch (Exception ignore) {
+            ServerVersionController.serverVersion = UNKNOWN;
+        }
+    }
+
+    private static Object findServerInstance() {
+        try {
+            return Class.forName("org.bukkit.Bukkit").getMethod("getServer").invoke(null, (Object[]) null);
+        } catch (Exception exception) {
+            return null;
         }
     }
 
     @Override
     public String toString() {
-        return name().toLowerCase();
+        return name();
     }
+
 }
 
