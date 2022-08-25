@@ -114,6 +114,19 @@ public enum ServerVersionController {
         }
     }
 
+    /**
+     *
+     * Using this method highly not recommended. We adding
+     * this to help developers who know what they doing.
+     *
+     * In normal conditions, server version will be calculated automatically.
+     *
+     * @param serverVersion
+     */
+    public static void setServerVersion(ServerVersionController serverVersion) {
+        ServerVersionController.serverVersion = serverVersion;
+    }
+
     private static ServerVersionController matchServerVersion(int rawVersion) {
         if (rawVersion < 5) return OUTDATED;
         if (rawVersion > ServerVersionController.values().length + 2) return NEWER;
