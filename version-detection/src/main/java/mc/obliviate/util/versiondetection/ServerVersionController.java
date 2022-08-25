@@ -107,10 +107,17 @@ public enum ServerVersionController {
         final String packageName = serverClazz.getPackage().getName();
         try {
             final String version = packageName.substring(packageName.lastIndexOf('.') + 1);
-            ServerVersionController.serverVersion = ServerVersionController.valueOf("V1_" + version.split("_")[1]);
+            final String rawVersion = version.split("_")[1];
+            ServerVersionController.serverVersion = matchServerVersion(Integer.parseInt(rawVersion));
         } catch (Exception ignore) {
             ServerVersionController.serverVersion = UNKNOWN;
         }
+    }
+
+    private static ServerVersionController matchServerVersion(int rawVersion) {
+        if (rawVersion < 5) return OUTDATED;
+        if (rawVersion > ServerVersionController.values().length + 2) return NEWER;
+        return ServerVersionController.valueOf("V1_" + rawVersion);
     }
 
     private static Object findServerInstance() {
