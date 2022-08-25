@@ -19,6 +19,11 @@ public enum ServerVersionController {
     V1_17,
     V1_18,
     V1_19,
+    V1_20,
+    V1_21,
+    V1_22,
+    V1_23,
+    V1_24,
     NEWER;
 
     private static ServerVersionController serverVersion;
