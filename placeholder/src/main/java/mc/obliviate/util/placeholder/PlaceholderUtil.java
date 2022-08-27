@@ -13,11 +13,12 @@ public class PlaceholderUtil {
      * Registers new placeholder (key, value relation) to
      * the placeholder util.
      *
-     * @param key   pseudo string, search string - ex: {player-name}
+     * @param key pseudo string, search string - ex: {player-name}
      * @param value result of placeholder, replace string, - ex: Mr_Obliviate
      * @return
      */
     public PlaceholderUtil add(final String key, final String value) {
+        if (key == null) throw new IllegalArgumentException("key cannot be null");
         placeholders.add(new InternalPlaceholder(key, value));
         return this;
     }
@@ -33,6 +34,7 @@ public class PlaceholderUtil {
      * @param placeholderUtil
      */
     public void merge(PlaceholderUtil placeholderUtil) {
+        if (placeholderUtil == null) return;
         this.placeholders.addAll(new ArrayList<>(placeholderUtil.placeholders));
     }
 
@@ -43,6 +45,7 @@ public class PlaceholderUtil {
      * @param texts texts to be parsed
      */
     public List<String> apply(final Iterable<String> texts) {
+        if (texts == null) return null;
         final List<String> result = new ArrayList<>();
         for (final String text : texts) {
             result.add(apply(text));
@@ -57,6 +60,7 @@ public class PlaceholderUtil {
      * @param text text to be parsed
      */
     public String apply(String text) {
+        if (text == null) return null;
         for (final InternalPlaceholder placeholder : placeholders) {
             text = text.replace(placeholder.getPlaceholder(), placeholder.getValue());
         }
